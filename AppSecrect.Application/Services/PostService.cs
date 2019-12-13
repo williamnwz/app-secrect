@@ -1,6 +1,7 @@
 ﻿namespace AppSecrect.Application.Services
 {
     using AppSecrect.Application.Dtos;
+    using AppSecrect.Application.Dtos.Posts;
     using AppSecrect.Application.Services.Interfaces;
     using AppSecrect.Domain.Entities;
     using AppSecrect.Domain.Repositories;
@@ -32,7 +33,7 @@
             this.listPosts = listPosts;
             this.unityOfWork = unityOfWork;
         }
-        public async Task CreatePost(Guid responsableId, string description)
+        public async Task<CreatePostResponse> CreatePost(Guid responsableId, string description)
         {
             User responsable = await this.userRepository.GetByIdAsync(responsableId);
 
@@ -44,6 +45,13 @@
             await this.createPost.Create(responsable, newPost);
 
             await this.unityOfWork.Commit();
+
+            return new CreatePostResponse()
+            {
+                Create = newPost.Create,
+                Description = newPost.Description.Value,
+                ResponsableId = responsable.Id
+            };
         }
         public async Task<ListPostResponse> ListPosts(Guid responsableId)
         {
@@ -66,9 +74,6 @@
                 Posts = postsDto
             };
         }
-
-
-
 
         public Task RemovePost(Guid responsableId, Guid postId)
         {

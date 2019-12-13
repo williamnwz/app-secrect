@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppSecrect.Domain\AppSecrect.Domain.csproj" />
+    <ProjectReference Include="..\AppSecrect.External\AppSecrect.External.csproj" />
   </ItemGroup>
 
   <ItemGroup>

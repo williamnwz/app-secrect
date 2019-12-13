@@ -1,6 +1,7 @@
 ﻿namespace AppSecret.WebApi.Controllers
 {
     using AppSecrect.Application.Dtos;
+    using AppSecrect.Application.Dtos.Posts;
     using AppSecrect.Application.Services.Interfaces;
     using AppSecret.WebApi.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -22,10 +23,10 @@
 
         [HttpPost]
         [Route("new-post")]
-        public async Task Create([FromBody]CreatePostRequest request)
+        public async Task<CreatePostResponse> Create([FromBody]CreatePostRequest request)
         {
             Guid currentUserId = await this.userLogged.GetUserId();
-            await this.postService.CreatePost(currentUserId, request.Description);
+            return await this.postService.CreatePost(currentUserId, request.Description);
         }
 
         [HttpGet]

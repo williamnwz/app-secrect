@@ -2,10 +2,13 @@
 namespace AppSecrect.Application.Services
 {
     using AppSecrect.Application.Dtos;
+    using AppSecrect.Application.Dtos.Users;
     using AppSecrect.Application.Mappers;
     using AppSecrect.Application.Services.Interfaces;
     using AppSecrect.Domain.Entities;
     using AppSecrect.Domain.Services.Interfaces;
+    using AppSecrect.External.NameGenerator;
+    using AppSecrect.External.NameGenerator.Interfaces;
     using Microsoft.AspNetCore.Identity;
     using System;
     using System.Threading.Tasks;
@@ -22,6 +25,7 @@ namespace AppSecrect.Application.Services
         private readonly IDtoMapper<User, LoginDto> userDtoToUserMapper;
         private readonly IUserAuthentication userAuthentication;
         private readonly IMakeFriendship makeFriendship;
+        private readonly INameGenerate nameGenerate;
 
         public UserService(
             IDtoMapper<User, CreateUser> regiserUserMapper,
@@ -30,6 +34,7 @@ namespace AppSecrect.Application.Services
             ISaveUser createUser,
             IUserAuthentication userAuthentication,
             IMakeFriendship makeFriendship,
+            INameGenerate nameGenerate,
             IUnityOfWork unityOfWork)
         {
             this.regiserUserMapper = regiserUserMapper;
@@ -38,6 +43,7 @@ namespace AppSecrect.Application.Services
             this.userDtoToUserMapper = userDtoToUserMapper;
             this.userAuthentication = userAuthentication;
             this.makeFriendship = makeFriendship;
+            this.nameGenerate = nameGenerate;
             this.unityOfWork = unityOfWork;
         }
 
@@ -51,6 +57,8 @@ namespace AppSecrect.Application.Services
 
             response.Token = token;
 
+            response.LoginAlias = await nameGenerate.Generate(GenderEnum.Undefined, CountryEnum.Portugal);
+
             return response;
         }
 
@@ -61,7 +69,7 @@ namespace AppSecrect.Application.Services
             await unityOfWork.Commit();
         }
 
-        public async Task Register(CreateUser dto)
+        public async Task<CreateUserResponse> Register(CreateUser dto)
         {
 
             User user = regiserUserMapper.Convert(dto);
@@ -69,6 +77,12 @@ namespace AppSecrect.Application.Services
             await this.createUser.SaveUserAsync(user);
 
             await this.unityOfWork.Commit();
+
+            return new CreateUserResponse()
+            {
+                Email = user.Email.Value,
+                Login = user.Login.Value
+            };
         }
     }
 }

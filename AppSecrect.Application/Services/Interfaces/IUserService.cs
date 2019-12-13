@@ -2,6 +2,7 @@
 namespace AppSecrect.Application.Services.Interfaces
 {
     using AppSecrect.Application.Dtos;
+    using AppSecrect.Application.Dtos.Users;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -13,7 +14,7 @@ namespace AppSecrect.Application.Services.Interfaces
     /// </summary>
     public interface IUserService
     {
-        Task Register(CreateUser dto);
+        Task<CreateUserResponse> Register(CreateUser dto);
 
         Task<LoginResponse> Login(LoginDto loginDto);
 

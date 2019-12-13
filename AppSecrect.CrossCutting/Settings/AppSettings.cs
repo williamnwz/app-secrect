@@ -13,5 +13,6 @@
         public string DbPassword { get; set; }
         public string DbUri { get; set; }
         public string Connection { get; set; }
+        public string NameGeneratorUrl { get; set; }
     }
 }

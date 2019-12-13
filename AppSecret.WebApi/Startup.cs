@@ -11,6 +11,7 @@ namespace AppSecret.WebApi
     using AppSecrect.CrossCutting.Settings;
     using AppSecrect.DataAccess;
     using AppSecrect.Domain;
+    using AppSecrect.External;
     using AppSecret.WebApi.Services;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
@@ -58,7 +59,8 @@ namespace AppSecret.WebApi
                 .AddDomain()
                 .AddDataAccess(appSettings)
                 .AddApplicationServices()
-                .AddCrossCuttingDependencies(appSettings);
+                .AddCrossCuttingDependencies(appSettings)
+                .AddExternalServicesDependencies();
 
             services.AddAuthentication(x =>
             {

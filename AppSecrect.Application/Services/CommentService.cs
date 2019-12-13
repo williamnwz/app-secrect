@@ -1,4 +1,5 @@
-﻿using AppSecrect.Application.Services.Interfaces;
+﻿using AppSecrect.Application.Dtos.Comments;
+using AppSecrect.Application.Services.Interfaces;
 using AppSecrect.Domain.Entities;
 using AppSecrect.Domain.Repositories;
 using AppSecrect.Domain.Services.Interfaces;
@@ -27,7 +28,7 @@ namespace AppSecrect.Application.Services
             this.unityOfWork = unityOfWork;
         }
 
-        public async Task CreateComment(Guid responsableId, Guid postId, string description)
+        public async Task<CreateCommentReponse> CreateComment(Guid responsableId, Guid postId, string description)
         {
             Post post = await postRepository.GetByIdAsync(postId);
 
@@ -43,6 +44,13 @@ namespace AppSecrect.Application.Services
             await createComment.Comment(comment);
 
             await this.unityOfWork.Commit();
+
+            return new CreateCommentReponse()
+            {
+                Create = comment.Create,
+                ResponsableId = comment.ResponsableId,
+                Description = comment.Description.Value
+            };
         }
     }
 }

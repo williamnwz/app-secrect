@@ -1,6 +1,7 @@
 ﻿namespace AppSecret.WebApi.Controllers
 {
     using AppSecrect.Application.Dtos;
+    using AppSecrect.Application.Dtos.Users;
     using AppSecrect.Application.Services.Interfaces;
     using AppSecret.WebApi.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -35,9 +36,9 @@
         [HttpPost]
         [Route("new-user")]
         [Authorize]
-        public async Task Create([FromBody]CreateUser dto)
+        public async Task<CreateUserResponse> Create([FromBody]CreateUser dto)
         {
-            await this.userService.Register(dto);
+           return await this.userService.Register(dto);
         }
 
         [HttpGet]

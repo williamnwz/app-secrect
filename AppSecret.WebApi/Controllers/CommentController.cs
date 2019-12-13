@@ -1,6 +1,7 @@
 ﻿namespace AppSecret.WebApi.Controllers
 {
     using AppSecrect.Application.Dtos;
+    using AppSecrect.Application.Dtos.Comments;
     using AppSecrect.Application.Services.Interfaces;
     using AppSecret.WebApi.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -24,11 +25,11 @@
 
         [HttpPost]
         [Route("new-comment")]
-        public async Task CreateComment([FromBody]CreateCommentRequest request)
+        public async Task<CreateCommentReponse> CreateComment([FromBody]CreateCommentRequest request)
         {
             Guid respnsable = await this.userLogged.GetUserId();
 
-            await this.commentService.CreateComment(respnsable, request.PostId, request.Description);
+            return await this.commentService.CreateComment(respnsable, request.PostId, request.Description);
         }
     }
 }
