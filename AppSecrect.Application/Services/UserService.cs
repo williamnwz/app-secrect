@@ -6,11 +6,14 @@ namespace AppSecrect.Application.Services
     using AppSecrect.Application.Mappers;
     using AppSecrect.Application.Services.Interfaces;
     using AppSecrect.Domain.Entities;
+    using AppSecrect.Domain.Repositories;
     using AppSecrect.Domain.Services.Interfaces;
     using AppSecrect.External.NameGenerator;
     using AppSecrect.External.NameGenerator.Interfaces;
     using Microsoft.AspNetCore.Identity;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -26,6 +29,8 @@ namespace AppSecrect.Application.Services
         private readonly IUserAuthentication userAuthentication;
         private readonly IMakeFriendship makeFriendship;
         private readonly INameGenerate nameGenerate;
+        private readonly IUserRepository userRepository;
+
 
         public UserService(
             IDtoMapper<User, CreateUser> regiserUserMapper,
@@ -35,6 +40,7 @@ namespace AppSecrect.Application.Services
             IUserAuthentication userAuthentication,
             IMakeFriendship makeFriendship,
             INameGenerate nameGenerate,
+            IUserRepository userRepository,
             IUnityOfWork unityOfWork)
         {
             this.regiserUserMapper = regiserUserMapper;
@@ -45,6 +51,7 @@ namespace AppSecrect.Application.Services
             this.makeFriendship = makeFriendship;
             this.nameGenerate = nameGenerate;
             this.unityOfWork = unityOfWork;
+            this.userRepository = userRepository;
         }
 
         public async Task<LoginResponse> Login(LoginDto loginDto)
@@ -58,6 +65,10 @@ namespace AppSecrect.Application.Services
             response.Token = token;
 
             response.LoginAlias = await nameGenerate.Generate(GenderEnum.Undefined, CountryEnum.Portugal);
+
+            List<User> users = await this.userRepository.FindAsync(x => x.Login.Value == user.Login.Value);
+
+            response.Id = users.FirstOrDefault().Id;
 
             return response;
         }

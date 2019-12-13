@@ -8,5 +8,9 @@ namespace AppSecrect.Application.Dtos
     public class CreatePostRequest
     {
         public string Description { get; set; }
+
+        public string Alias { get; set; }
+
+        public string ColorProfileUsed { get; set; }
     }
 }

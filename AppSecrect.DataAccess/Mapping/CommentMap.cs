@@ -14,6 +14,9 @@
 
             builder.Property(x => x.Create).HasColumnName("create");
 
+            builder.Property(x => x.Alias).HasColumnName("alias");
+            builder.Property(x => x.ColorProfileUsed).HasColumnName("colorProfileUsed");
+
 
             builder.OwnsOne(x => x.Description, description =>
             {

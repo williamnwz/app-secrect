@@ -14,13 +14,18 @@
         protected Post()
         {
         }
-        public Post(User responsable, string description)
+        public Post(User responsable, string description, string alias, string colorProfileUsed)
         {
             this.Create = DateTime.UtcNow;
             this.Description = new Description(description);
             this.Responsable = responsable;
             this.ResponsableId = responsable.Id;
+            this.Alias = alias;
+            this.ColorProfileUsed = colorProfileUsed;
         }
+
+        public string Alias { get; set; }
+        public string ColorProfileUsed { get; set; }
 
         public Guid ResponsableId { get; protected set; }
         public User Responsable { get; protected set; }

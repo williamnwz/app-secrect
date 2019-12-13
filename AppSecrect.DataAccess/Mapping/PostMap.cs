@@ -22,6 +22,9 @@
             builder.Property(x => x.Create).HasColumnName("create");
             builder.Property(x => x.ResponsableId).HasColumnName("responsableId");
 
+            builder.Property(x => x.Alias).HasColumnName("alias");
+            builder.Property(x => x.ColorProfileUsed).HasColumnName("colorProfileUsed");
+
             builder
                 .HasMany(x => x.Comments)
                 .WithOne(x => x.Post)
