@@ -14,6 +14,9 @@
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedOnAdd();
 
+            builder.Property(x => x.Alias).HasColumnName("alias");
+            builder.Property(x => x.ColorProfileUsed).HasColumnName("colorProfileUsed");
+
             builder.OwnsOne(x => x.Description, description =>
             {
                 description.Property(d => d.Value).HasColumnName("description");
@@ -22,8 +25,7 @@
             builder.Property(x => x.Create).HasColumnName("create");
             builder.Property(x => x.ResponsableId).HasColumnName("responsableId");
 
-            builder.Property(x => x.Alias).HasColumnName("alias");
-            builder.Property(x => x.ColorProfileUsed).HasColumnName("colorProfileUsed");
+
 
             builder
                 .HasMany(x => x.Comments)

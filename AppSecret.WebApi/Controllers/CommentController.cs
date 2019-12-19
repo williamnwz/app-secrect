@@ -29,7 +29,7 @@
         {
             Guid respnsable = await this.userLogged.GetUserId();
 
-            return await this.commentService.CreateComment(respnsable, request.PostId, request.Description);
+            return await this.commentService.CreateComment(respnsable, request.PostId, request.Description, request.Alias, request.ColorProfileUsed);
         }
     }
 }

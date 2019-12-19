@@ -28,7 +28,7 @@ namespace AppSecrect.Application.Services
             this.unityOfWork = unityOfWork;
         }
 
-        public async Task<CreateCommentReponse> CreateComment(Guid responsableId, Guid postId, string description)
+        public async Task<CreateCommentReponse> CreateComment(Guid responsableId, Guid postId, string description, string alias, string colorProfileUsed)
         {
             Post post = await postRepository.GetByIdAsync(postId);
 
@@ -39,7 +39,7 @@ namespace AppSecrect.Application.Services
             if (responsable == null)
                 throw new ApplicationException("responsable not exits!");
 
-            Comment comment = new Comment(post, responsable, description);
+            Comment comment = new Comment(post, responsable, description, alias, colorProfileUsed);
 
             await createComment.Comment(comment);
 

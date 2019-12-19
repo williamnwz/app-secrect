@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AppSecrect.DataAccess.Migrations
 {
     [DbContext(typeof(AppSecrectContext))]
-    [Migration("20191125151003_Initial")]
-    partial class Initial
+    [Migration("20191219153655_secretm")]
+    partial class secretm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,14 @@ namespace AppSecrect.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Alias")
+                        .HasColumnName("alias")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ColorProfileUsed")
+                        .HasColumnName("colorProfileUsed")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Create")
                         .HasColumnName("create")
@@ -76,6 +84,14 @@ namespace AppSecrect.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Alias")
+                        .HasColumnName("alias")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ColorProfileUsed")
+                        .HasColumnName("colorProfileUsed")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Create")
                         .HasColumnName("create")

@@ -33,14 +33,15 @@
             this.listPosts = listPosts;
             this.unityOfWork = unityOfWork;
         }
-        public async Task<CreatePostResponse> CreatePost(Guid responsableId, string description)
+        
+        public async Task<CreatePostResponse> CreatePost(Guid responsableId, string description, string alias, string colorProfileUsed)
         {
             User responsable = await this.userRepository.GetByIdAsync(responsableId);
 
             if (responsable == null)
                 throw new ApplicationException("Invalid responsable");
 
-            Post newPost = new Post(responsable, description);
+            Post newPost = new Post(responsable, description, alias, colorProfileUsed);
 
             await this.createPost.Create(responsable, newPost);
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppSecrect.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class secretm : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,6 +52,8 @@ namespace AppSecrect.DataAccess.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
+                    alias = table.Column<string>(nullable: true),
+                    colorProfileUsed = table.Column<string>(nullable: true),
                     responsableId = table.Column<Guid>(nullable: false),
                     create = table.Column<DateTime>(nullable: false),
                     description = table.Column<string>(nullable: true)
@@ -72,6 +74,8 @@ namespace AppSecrect.DataAccess.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
+                    alias = table.Column<string>(nullable: true),
+                    colorProfileUsed = table.Column<string>(nullable: true),
                     PostId = table.Column<Guid>(nullable: false),
                     create = table.Column<DateTime>(nullable: false),
                     description = table.Column<string>(nullable: true),

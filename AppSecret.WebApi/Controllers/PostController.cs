@@ -26,7 +26,7 @@
         public async Task<CreatePostResponse> Create([FromBody]CreatePostRequest request)
         {
             Guid currentUserId = await this.userLogged.GetUserId();
-            return await this.postService.CreatePost(currentUserId, request.Description);
+            return await this.postService.CreatePost(currentUserId, request.Description, request.Alias, request.ColorProfileUsed);
         }
 
         [HttpGet]

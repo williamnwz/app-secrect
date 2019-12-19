@@ -26,6 +26,14 @@ namespace AppSecrect.DataAccess.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Alias")
+                        .HasColumnName("alias")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ColorProfileUsed")
+                        .HasColumnName("colorProfileUsed")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("Create")
                         .HasColumnName("create")
                         .HasColumnType("timestamp without time zone");
@@ -74,6 +82,14 @@ namespace AppSecrect.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Alias")
+                        .HasColumnName("alias")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ColorProfileUsed")
+                        .HasColumnName("colorProfileUsed")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Create")
                         .HasColumnName("create")
