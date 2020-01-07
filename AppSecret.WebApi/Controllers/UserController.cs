@@ -43,7 +43,6 @@
 
         [HttpGet]
         [Route("test")]
-        [Authorize]
         public async Task<string> Teste()
         {
             return "foi!";

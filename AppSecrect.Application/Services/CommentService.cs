@@ -64,8 +64,10 @@ namespace AppSecrect.Application.Services
         public async Task RemoveComment(Guid responsableId, Guid commentId)
         {
             Comment comment = await this.commentRepository.GetByIdAsync(commentId);
+
             if (comment == null)
                 throw new ApplicationException("comment not exits!");
+
 
             await this.removeComment.Remove(comment);
         }

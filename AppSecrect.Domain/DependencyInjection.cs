@@ -24,6 +24,8 @@ namespace AppSecrect.Domain
             serviceCollection.AddScoped<IListPosts, ListPostsFromTheLastFiveDays>();
             serviceCollection.AddScoped<ICreateComment, CreateComment>();
             serviceCollection.AddScoped<IRemovePost, RemovePost>();
+            serviceCollection.AddScoped<IRemoveComment, RemoveComment>();
+
 
             return serviceCollection;
         }
