@@ -9,5 +9,7 @@ namespace AppSecrect.Application.Services.Interfaces
     public interface ICommentService
     {
         Task<CreateCommentReponse> CreateComment(Guid responsableId, Guid postId, string description, string alias, string colorProfileUsed);
+
+        Task RemoveComment(Guid responsableId, Guid commentId);
     }
 }

@@ -15,16 +15,24 @@ namespace AppSecrect.Application.Services
         private readonly ICreateComment createComment;
         private readonly IPostRepository postRepository;
         private readonly IUserRepository userRepository;
+        private readonly IRemoveComment removeComment;
+        private readonly ICommentRepository commentRepository;
+
+
         private readonly IUnityOfWork unityOfWork;
         public CommentService(
             ICreateComment createComment,
             IPostRepository postRepository,
             IUserRepository userRepository,
+            IRemoveComment removeComment,
+            ICommentRepository commentRepository,
             IUnityOfWork unityOfWork)
         {
             this.createComment = createComment;
             this.userRepository = userRepository;
             this.postRepository = postRepository;
+            this.removeComment = removeComment;
+            this.commentRepository = commentRepository;
             this.unityOfWork = unityOfWork;
         }
 
@@ -51,6 +59,15 @@ namespace AppSecrect.Application.Services
                 ResponsableId = comment.ResponsableId,
                 Description = comment.Description.Value
             };
+        }
+
+        public async Task RemoveComment(Guid responsableId, Guid commentId)
+        {
+            Comment comment = await this.commentRepository.GetByIdAsync(commentId);
+            if (comment == null)
+                throw new ApplicationException("comment not exits!");
+
+            await this.removeComment.Remove(comment);
         }
     }
 }
