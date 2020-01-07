@@ -38,7 +38,7 @@
             return await this.postService.ListPosts(responsableId);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("remove-post")]
         public async Task RemovePost([FromBody]Guid postId)
         {

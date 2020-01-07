@@ -32,7 +32,7 @@
             return await this.commentService.CreateComment(respnsable, request.PostId, request.Description, request.Alias, request.ColorProfileUsed);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("remove-comment")]
         public async Task RemoveComment([FromBody]Guid commentId)
         {

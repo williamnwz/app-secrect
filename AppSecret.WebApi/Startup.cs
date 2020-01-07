@@ -23,6 +23,7 @@ namespace AppSecret.WebApi
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -62,6 +63,12 @@ namespace AppSecret.WebApi
                 .AddCrossCuttingDependencies(appSettings)
                 .AddExternalServicesDependencies();
 
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AppSecrect", Version = "v1" });
+            });
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -87,6 +94,14 @@ namespace AppSecret.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppSecrect");
+            });
+
             ServiceLocator.ServiceProvider = app.ApplicationServices;
 
             app.UseHttpsRedirection();
