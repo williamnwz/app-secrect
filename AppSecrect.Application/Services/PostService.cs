@@ -18,6 +18,7 @@
         private readonly IUserRepository userRepository;
         private readonly IPostRepository postRepository;
         private readonly IListPosts listPosts;
+        private readonly IRemovePost removePost;
         private readonly IUnityOfWork unityOfWork;
 
         public PostService(
@@ -25,15 +26,17 @@
             IUserRepository userRepository,
             IPostRepository postRepository,
             IListPosts listPosts,
+            IRemovePost removePost,
             IUnityOfWork unityOfWork)
         {
             this.createPost = createPost;
             this.userRepository = userRepository;
             this.postRepository = postRepository;
             this.listPosts = listPosts;
+            this.removePost = removePost;
             this.unityOfWork = unityOfWork;
         }
-        
+
         public async Task<CreatePostResponse> CreatePost(Guid responsableId, string description, string alias, string colorProfileUsed)
         {
             User responsable = await this.userRepository.GetByIdAsync(responsableId);
@@ -76,9 +79,16 @@
             };
         }
 
-        public Task RemovePost(Guid responsableId, Guid postId)
+        public async Task RemovePost(Guid responsableId, Guid postId)
         {
-            throw new NotImplementedException();
+            Post post = await this.postRepository.GetByIdAsync(postId);
+
+            if (post == null)
+                throw new ApplicationException("post not exists");
+
+            await removePost.Remove(post);
+
+            await this.unityOfWork.Commit();
         }
     }
 }

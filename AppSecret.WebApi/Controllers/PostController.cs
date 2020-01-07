@@ -34,7 +34,17 @@
         public async Task<ListPostResponse> ListPosts()
         {
             Guid responsableId = await userLogged.GetUserId();
+
             return await this.postService.ListPosts(responsableId);
+        }
+
+        [HttpPost]
+        [Route("remove-post")]
+        public async Task RemovePost([FromBody]Guid postId)
+        {
+            Guid currentUserId = await this.userLogged.GetUserId();
+
+            await this.postService.RemovePost(currentUserId, postId);
         }
 
 

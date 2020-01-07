@@ -23,7 +23,7 @@ namespace AppSecrect.Domain
             serviceCollection.AddScoped<IMakeFriendship, MakeFriendship>();
             serviceCollection.AddScoped<IListPosts, ListPostsFromTheLastFiveDays>();
             serviceCollection.AddScoped<ICreateComment, CreateComment>();
-
+            serviceCollection.AddScoped<IRemovePost, RemovePost>();
 
             return serviceCollection;
         }
