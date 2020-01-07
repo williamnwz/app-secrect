@@ -65,10 +65,14 @@
             {
                 Create = x.Create,
                 Description = x.Description.Value,
+                Alias = x.Alias,
+                ColorProfileUsed = x.ColorProfileUsed,
                 Comments = x.Comments.Select(c => new CommentDto()
                 {
                     Create = c.Create,
                     Description = c.Description.Value,
+                    Alias = c.Alias,
+                    ColorProfileUsed = c.ColorProfileUsed,
                     Responsable = c.ResponsableId.ToString()
                 }).ToList()
             }).ToList();
