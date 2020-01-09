@@ -51,11 +51,11 @@
         [HttpPost]
         [Route("make-friend")]
         [AllowAnonymous]
-        public async Task MakeFriend([FromBody]MakeFriendDto dto)
+        public async Task MakeFriend([FromBody]Guid friendUserId)
         {
             Guid me = await this.userLogged.GetUserId();
 
-           await this.userService.MakeFriend(me, dto.Friend);
+           await this.userService.MakeFriend(me, friendUserId);
         }
 
 

@@ -5,8 +5,8 @@ namespace AppSecrect.CrossCutting
     using AppSecrect.CrossCutting.Security;
     using AppSecrect.CrossCutting.Security.Interfaces;
     using AppSecrect.CrossCutting.Settings;
-    using Microsoft.Extensions.DependencyInjection;
     
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Text;
     public static class DependencyInjection
@@ -14,6 +14,8 @@ namespace AppSecrect.CrossCutting
         public static IServiceCollection AddCrossCuttingDependencies(this IServiceCollection services, AppSettings appSettings)
         {
             services.AddTransient<ITokenService, JwtTokenService>();
+
+       
 
             return services;
         }

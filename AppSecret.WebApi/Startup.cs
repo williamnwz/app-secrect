@@ -1,17 +1,14 @@
 namespace AppSecret.WebApi
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
-    using System.Threading.Tasks;
     using AppSecrect.Application;
-    using AppSecrect.Application.Services.Interfaces;
     using AppSecrect.CrossCutting;
     using AppSecrect.CrossCutting.Settings;
     using AppSecrect.DataAccess;
     using AppSecrect.Domain;
     using AppSecrect.External;
+    using AppSecret.WebApi.Filters;
+    using AppSecret.WebApi.Hubs;
     using AppSecret.WebApi.Services;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
@@ -41,6 +38,8 @@ namespace AppSecret.WebApi
 
             services.AddCors();
             services.AddControllers();
+
+
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
@@ -75,20 +74,23 @@ namespace AppSecret.WebApi
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                 {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
+                c.AddSecurityRequirement(
+                    new OpenApiSecurityRequirement {
                         {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] { }
                         }
-                    },
-                    new string[] { }
-                }
+                    });
             });
-            });
+
+            services.AddSignalR();
 
             services.AddAuthentication(x =>
             {
@@ -105,6 +107,12 @@ namespace AppSecret.WebApi
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            });
+
+            
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ApiExceptionFilter());
             });
         }
 
@@ -142,6 +150,9 @@ namespace AppSecret.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PostNotificationHub>("/PostNotificationHub");
+                endpoints.MapHub<CommentNotificationHub>("/commentNotificationHub");
+                
             });
         }
 

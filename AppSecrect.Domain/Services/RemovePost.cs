@@ -1,6 +1,7 @@
 ﻿namespace AppSecrect.Domain.Services
 {
     using AppSecrect.Domain.Entities;
+    using AppSecrect.Domain.Exceptions;
     using AppSecrect.Domain.Repositories;
     using AppSecrect.Domain.Services.Interfaces;
     using System;
@@ -20,7 +21,7 @@
         public async Task Remove(Post post)
         {
             if (post == null)
-                throw new Exception("There are no post to remove");
+                throw new DomainException("There are no post to remove");
 
             Post postToRemove = await this.postRepository.GetByIdAsync(post.Id);
 
