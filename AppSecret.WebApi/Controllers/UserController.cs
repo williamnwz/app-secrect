@@ -16,8 +16,7 @@
         private readonly IUserService userService;
         private readonly IUserLogged userLogged;
 
-        public UserController(
-           IUserService userService)
+        public UserController(IUserService userService)
         {
             this.userService = userService;
             this.userLogged = new UserLogged(this);
@@ -35,7 +34,6 @@
 
         [HttpPost]
         [Route("new-user")]
-        [Authorize]
         public async Task<CreateUserResponse> Create([FromBody]CreateUser dto)
         {
            return await this.userService.Register(dto);

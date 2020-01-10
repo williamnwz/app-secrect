@@ -4,6 +4,7 @@
     using AppSecrect.DataAccess.Mapping;
     using AppSecrect.Domain.Entities;
     using Microsoft.EntityFrameworkCore;
+    using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
     /// <summary>
     /// DbContext
@@ -27,7 +28,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(this.appSettings.Connection);
+            optionsBuilder.UseMySql(this.appSettings.Connection, x => { x.ServerVersion(new System.Version(5, 7, 23), ServerType.MySql); });
             base.OnConfiguring(optionsBuilder);
         }
 

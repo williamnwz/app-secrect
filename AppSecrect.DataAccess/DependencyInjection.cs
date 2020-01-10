@@ -8,6 +8,8 @@ namespace AppSecrect.DataAccess
     using AppSecrect.Domain.Services.Interfaces;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+    using System;
     using System.Diagnostics;
 
 
@@ -25,12 +27,14 @@ namespace AppSecrect.DataAccess
             services.AddScoped<IFriendRepostory, FriendRepostory>();
             services.AddScoped<ICommentRepository, CommentRepository>();
 
-            services.AddDbContext<AppSecrectContext>(options => options.UseNpgsql(appSettings.Connection, opt =>
-            {
-                Debug.WriteLine("Connection String");
-                Debug.WriteLine(appSettings.DbUri);
-                opt.MigrationsAssembly("AppSecrect.DataAccess");
-            }));
+            services.AddDbContext<AppSecrectContext>();
+
+            //services.AddDbContext<AppSecrectContext>(options => options.UseMySql(appSettings.Connection, opt =>
+            //{
+            //    opt.ServerVersion(new Version(5, 7, 23), ServerType.MySql);
+            //    opt.DisableBackslashEscaping();
+            //    opt.MigrationsAssembly("AppSecrect.DataAccess");
+            //}));
 
             return services;
         }
